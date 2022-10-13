@@ -33,3 +33,11 @@ resources = {
 
 # TODO: 1. Print report to show current resource
 
+choice = input("What would you like? (espresso/latte/cappuccino): ").lower()
+
+
+def check_resources():
+    if choice == "report":
+        return MENU[resources]
+    elif choice == "espresso":
+        return MENU
