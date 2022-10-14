@@ -43,22 +43,11 @@ def print_resources():
     
         
 def check_ingredients(drink):
-    for ingredient, amount in drink['ingredients'].items():
-        if resources[ingredient] < amount:
-            print("Sorry, not enough ingredients")
-            coffee_machine()
-       
-            
-
-def count_money():
-    
-    quarters = .25 * num_of_quarters
-    dimes = .10 * num_of_dimes
-    nickels = .05 * num_of_nickels
-    pennies = .01 * num_of_pennies
-    
- 
-
+    for ingredient, amount in MENU[drink]['ingredients'].items():
+        for ingredient2, amount2 in resources.items():
+            if amount2 < amount:
+                print("Sorry, not enough ingredients")
+                coffee_machine()
 
 
 def change(cost):
@@ -69,6 +58,12 @@ def change(cost):
 
 
 def coffee_machine():
+    def count_money():
+        
+        quarters = .25 * num_of_quarters
+        dimes = .10 * num_of_dimes
+        nickels = .05 * num_of_nickels
+        pennies = .01 * num_of_pennies
     is_running = True
     while is_running:
         choice = input("What would you like? (espresso/latte/cappuccino): ").lower()
@@ -87,8 +82,8 @@ def coffee_machine():
         num_of_pennies = int(input('How many pennies?'))
         
         count_money()
-        check_ingredients()
-        change(cost = choice)
+        check_ingredients(choice)
+        change(choice)
         
         print(f"Here is your {choice}☕. Enjoy!")
         is_running = False
