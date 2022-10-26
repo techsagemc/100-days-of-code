@@ -43,27 +43,29 @@ def print_resources():
     
         
 def check_ingredients(drink):
-    for ingredient, amount in MENU[drink]['ingredients'].items():
-        for ingredient2, amount2 in resources.items():
-            if amount2 < amount:
-                print("Sorry, not enough ingredients")
-                coffee_machine()
+    for value in MENU[drink]['ingredients']:
+        if value >= resources[value]:
+            print(f"Sorry there is not enough {value}.")
+            return False
+        return True
 
 
-def change(cost):
-    for item, value in MENU[cost]:
-        change = quarters + dimes + nickels + pennies
-        
-          
+def change(drink):
+    """Returns the amount of change from the transaction"""
+    change =  count_money() - MENU[drink][cost]
+    return (f"Your change is {change}.")
 
 
+def count_money():
+    """Returns the sum of the coins inserted"""
+    print("Please insert coins.")
+    total = int(input('How many quarters?')) *.25
+    total += int(input('How many dimes?')) *.10
+    total += int(input('How many nickels?')) *.05
+    total += int(input('How many pennies?')) * .01
+    return total 
+    
 def coffee_machine():
-    def count_money():
-        
-        quarters = .25 * num_of_quarters
-        dimes = .10 * num_of_dimes
-        nickels = .05 * num_of_nickels
-        pennies = .01 * num_of_pennies
     is_running = True
     while is_running:
         choice = input("What would you like? (espresso/latte/cappuccino): ").lower()
@@ -72,17 +74,10 @@ def coffee_machine():
             print("Turning off the machine")
         
         elif choice == "report":
-            print_resources()   
-            coffee_machine()
-        
-        print("Please insert coins.")
-        num_of_quarters = int(input('How many quarters?'))
-        num_of_dimes = int(input('How many dimes?'))
-        num_of_nickels = int(input('How many nickels?'))
-        num_of_pennies = int(input('How many pennies?'))
-        
-        count_money()
+            print_resources()
+            
         check_ingredients(choice)
+        count_money()
         change(choice)
         
         print(f"Here is your {choice}☕. Enjoy!")
@@ -95,4 +90,5 @@ coffee_machine()
     # TODO: 2. Check if there is enough resources to make the drink. If not print "Sorry, not enough resources" and continue.
     
     
+
 
